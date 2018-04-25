@@ -11,7 +11,7 @@ class SignupForm extends React.Component {
       email: "",username: "",
       password: ""
     },
-    loading: false,
+   // loading: false,
     errors: {}
   };
 
@@ -46,16 +46,13 @@ class SignupForm extends React.Component {
   };
 
   render() {
-    const { data, errors, loading } = this.state;
+    const { data, errors} = this.state;
 
     return (
       <form onSubmit={this.onSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
+          <input  type="email"  id="email"          name="email"
            
             value={data.email}
             onChange={this.onChange}
@@ -69,14 +66,9 @@ class SignupForm extends React.Component {
         <div className="form-group">
           <label htmlFor="username">Username</label>
           <input
-            type="text"
-            id="username"
-            name="username"
-            value={data.username}
+            type="text"  id="username" name="username" value={data.username}
             onChange={this.onChange}
-            className={
-              errors.username ? "form-control is-invalid" : "form-control"
-            }
+            className={ errors.username ? "form-control is-invalid" : "form-control" }
           />
           <div className="invalid-feedback">{errors.username}</div>
         </div>
@@ -84,13 +76,9 @@ class SignupForm extends React.Component {
         <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
-            type="password"
-            id="password"
-            name="password"
-            value={data.password}
+            type="password"  id="password"  name="password"   value={data.password}
             onChange={this.onChange}
           />
-
         <div className="invalid-feedback">{errors.password}</div>
       </div>
 

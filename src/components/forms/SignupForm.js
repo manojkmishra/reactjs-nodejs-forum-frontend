@@ -1,13 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Form, Button } from "semantic-ui-react";
+//import { Form, Button } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
-import InlineError from "../messages/InlineError";
+//import InlineError from "../messages/InlineError";
 
 class SignupForm extends React.Component {
   state = {
     data: {
-      email: "",
+      email: "",username: "",
       password: ""
     },
     loading: false,
@@ -16,7 +17,7 @@ class SignupForm extends React.Component {
 
   onChange = e =>
     this.setState({
-      ...this.state,
+     // ...this.state,
       data: { ...this.state.data, [e.target.name]: e.target.value }
     });
 
@@ -39,6 +40,7 @@ class SignupForm extends React.Component {
 
     if (!isEmail(data.email)) errors.email = "Invalid email";
     if (!data.password) errors.password = "Can't be blank";
+    if (!data.username) errors.username = "Can't be blank";
 
     return errors;
   };
@@ -47,21 +49,39 @@ class SignupForm extends React.Component {
     const { data, errors, loading } = this.state;
 
     return (
-      <Form onSubmit={this.onSubmit} loading={loading}>
-        <Form.Field error={!!errors.email}>
+      <form onSubmit={this.onSubmit}>
+        <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
             name="email"
-            placeholder="email@email.com"
+           
             value={data.email}
             onChange={this.onChange}
+            className={
+              errors.email ? "form-control is-invalid" : "form-control"
+            }
           />
-          {errors.email && <InlineError text={errors.email} />}
-        </Form.Field>
+       <div className="invalid-feedback">{errors.email}</div>
+    </div>
 
-        <Form.Field error={!!errors.password}>
+        <div className="form-group">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            value={data.username}
+            onChange={this.onChange}
+            className={
+              errors.username ? "form-control is-invalid" : "form-control"
+            }
+          />
+          <div className="invalid-feedback">{errors.username}</div>
+        </div>
+
+        <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
             type="password"
@@ -70,11 +90,17 @@ class SignupForm extends React.Component {
             value={data.password}
             onChange={this.onChange}
           />
-          {errors.password && <InlineError text={errors.password} />}
-        </Form.Field>
 
-        <Button primary>Sign Up</Button>
-      </Form>
+        <div className="invalid-feedback">{errors.password}</div>
+      </div>
+
+      <button type="submit" className="btn btn-primary btn-block">
+        Sign Up
+      </button>
+          <small className="form-text text-center">
+          or <Link to="/login">LOGIN</Link> if you have an account
+        </small>
+      </form>
     );
   }
 }
